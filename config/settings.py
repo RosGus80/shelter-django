@@ -25,7 +25,7 @@ dotenv.load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = os.getenv('KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '2.56.90.144']
 
