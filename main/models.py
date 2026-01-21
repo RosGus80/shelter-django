@@ -41,6 +41,8 @@ class Player(models.Model):
 
     class Meta:
         unique_together = ('room', 'seat')
+        verbose_name = "Игрок"
+        verbose_name_plural = "Игроки"
 
     def __str__(self):
         return f"Player {self.seat} in {self.room.code}"
@@ -73,6 +75,10 @@ class Trait(models.Model):
         help_text="Отрицательное значение - что-то плохое. Положительное - что-то хорошее. От -10 до 10"
     )
 
+    class Meta:
+        verbose_name = "Характеристика"
+        verbose_name_plural = "Характеристики"
+
     def __str__(self):
         return f"{self.description}"
     
@@ -96,6 +102,8 @@ class AssignedTrait(models.Model):
 
     class Meta:
         ordering = ["trait_type"]
+        verbose_name = "Назначенная характеристика"
+        verbose_name_plural = "Назначенные характеристики"
 
 
     def __str__(self):
@@ -105,12 +113,20 @@ class AssignedTrait(models.Model):
 class ActionCard(models.Model):
     description = models.TextField()
 
+    class Meta:
+        verbose_name = "Карта действия"
+        verbose_name_plural = "Карты действий"
+
     def __str__(self):
         return f"Action: {self.description}"
 
 
 class ReactionCard(models.Model):
     description = models.TextField()
+
+    class Meta:
+        verbose_name = "Карта реакции"
+        verbose_name_plural = "Карты реакций"
 
     def __str__(self):
         return f"Reaction: {self.description}"
@@ -144,6 +160,10 @@ class ShelterDescription(models.Model):
     difficulty = models.PositiveSmallIntegerField(help_text="От 1 до 5 (чем больше - тем сложнее)")
     description = models.TextField()
 
+    class Meta:
+        verbose_name = "Описание убежища"
+        verbose_name_plural = "Описания убежищ"
+
 
 class Shelter(models.Model):
     """Динамичная сущность - прикрепляется к игре"""
@@ -169,6 +189,11 @@ class Catastrophe(models.Model):
     severity = models.PositiveSmallIntegerField(help_text="От 1 до 5")
     title = models.CharField(max_length=255)
     description = models.TextField()
+
+    class Meta:
+        verbose_name = "Катастрофа"
+        verbose_name_plural = "Катастрофы"
+
 
 
 class RoomCatastrophe(models.Model):
