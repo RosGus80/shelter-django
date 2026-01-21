@@ -8,7 +8,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         username = "admin"
         email = "r@gmail.com"
-        password = "PassOne1"
+        password = "S6_kd?iF0_"
 
         if User.objects.filter(username=username).exists():
             self.stdout.write(self.style.WARNING(f"Superuser '{username}' already exists."))
