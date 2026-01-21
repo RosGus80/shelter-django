@@ -27,7 +27,8 @@ SECRET_KEY = os.getenv('KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '2.56.90.144']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost',]
+# '2.56.90.144'
 
 
 # Application definition
@@ -61,7 +62,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     'http://2.56.90.144:3000',
-    'http://2.56.90.144:8000',
+    # 'http://2.56.90.144:8000',
 ]
 
 
