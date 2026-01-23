@@ -1,11 +1,15 @@
 from django.contrib import admin
-from main.models import Trait, ShelterDescription, Catastrophe, Room, Player, AssignedTrait, ActionCard, ReactionCard, AssignedActionCard, AssignedReactionCard
+from main.models import Trait, ShelterDescription, Catastrophe, Room, Player, AssignedTrait, ActionCard, ReactionCard, AssignedActionCard, AssignedReactionCard, Shelter
 
 # Register your models here.
 
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
     list_display = ('code', 'pk')
+
+@admin.register(Shelter)
+class ShelterAdmin(admin.ModelAdmin):
+    list_display = ('pk', )
 
 
 @admin.register(ActionCard)
