@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.exceptions import NotFound
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from django.db.models import Q
 from main.models import Room, Player, RoomCatastrophe, Shelter, AssignedTrait, AssignedActionCard, AssignedReactionCard
@@ -23,7 +25,7 @@ STALE_ROOM_DAYS = 7
 
 # & Комнаты
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class RoomCreateAPIView(generics.CreateAPIView):
     serializer_class = RoomCreateSerializer
     queryset = Room.objects.all()
@@ -64,12 +66,14 @@ class RoomCreateAPIView(generics.CreateAPIView):
         )
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class RoomRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomRetrieveSerializer
     lookup_field = "code"
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class StartGameAPIView(APIView):
     def post(self, request, code):
         try:
@@ -105,6 +109,7 @@ class StartGameAPIView(APIView):
         return Response({"detail": "Game started."}, status=status.HTTP_200_OK)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class RoomRestartAPIView(APIView):
     def post(self, request, code):
         try:
@@ -154,11 +159,13 @@ class RoomRestartAPIView(APIView):
 # & Игроки
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class PlayerRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class PlayerUpdateAPIView(generics.UpdateAPIView):
     serializer_class = PlayerSerializer
     queryset = Player.objects.all()
@@ -184,6 +191,7 @@ class PlayerUpdateAPIView(generics.UpdateAPIView):
         return player
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class JoinRoomAPIView(APIView):
     def post(self, request, code):
         try:
@@ -242,6 +250,7 @@ class JoinRoomAPIView(APIView):
         return Response(PlayerSerializer(unassigned_player).data)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class LeaveRoomAPIView(APIView):
     def post(self, request, code):
         # Delete stale rooms (>7 days old)
@@ -285,6 +294,7 @@ class LeaveRoomAPIView(APIView):
         return Response({"detail": "Left the room."}, status=status.HTTP_200_OK)
     
 
+@method_decorator(csrf_exempt, name='dispatch')
 class RevealTraitAPIView(APIView):
     def post(self, request, player_id, trait_id):
         device_id = request.data.get("device_id")
@@ -331,6 +341,7 @@ class RevealTraitAPIView(APIView):
         )
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class UseActionCardView(APIView):
     def post(self, request, pk):
         card = get_object_or_404(AssignedActionCard, pk=pk)
@@ -347,6 +358,7 @@ class UseActionCardView(APIView):
         return Response({"status": "ok"})
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class UseReactionCardView(APIView):
     def post(self, request, pk):
         card = get_object_or_404(AssignedReactionCard, pk=pk)
@@ -363,6 +375,7 @@ class UseReactionCardView(APIView):
         return Response({"status": "ok"})
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class PlayerByDeviceView(APIView):
     def post(self, request):
         device_id = request.data.get("device_id")
