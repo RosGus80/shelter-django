@@ -192,9 +192,7 @@ class PlayerUpdateAPIView(generics.UpdateAPIView):
 
 class KillPlayerAPIView(APIView):
     def post(self, request, player_id):
-        print(request.data)
-
-        device_id = request.data.get("device_id")
+        device_id = request.data.get("deviceId")
         if not device_id:
             return Response({"detail": "device_id required"}, status=status.HTTP_400_BAD_REQUEST)
 
