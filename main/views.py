@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.exceptions import NotFound
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.permissions import AllowAny
 
 from django.db.models import Q
 from main.models import Room, Player, RoomCatastrophe, Shelter, AssignedTrait, AssignedActionCard, AssignedReactionCard
@@ -27,6 +29,10 @@ STALE_ROOM_DAYS = 7
 class RoomCreateAPIView(generics.CreateAPIView):
     serializer_class = RoomCreateSerializer
     queryset = Room.objects.all()
+
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
 
     def perform_create(self, serializer, code: str):
         """
