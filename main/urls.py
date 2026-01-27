@@ -12,6 +12,7 @@ from main.views import (
     UseActionCardView,
     UseReactionCardView,
     PlayerByDeviceView,
+    KillPlayerAPIView,
 )
 
 app_name = "main"
@@ -36,6 +37,7 @@ urlpatterns = [
         PlayerUpdateAPIView.as_view(),
         name="player-update",
     ),
+    path("players/<int:player_id>/kill/", KillPlayerAPIView.as_view(), name="kill-player"),
     path("action-cards/<int:pk>/use/", UseActionCardView.as_view()),
     path("reaction-cards/<int:pk>/use/", UseReactionCardView.as_view()),
 

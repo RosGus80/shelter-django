@@ -188,6 +188,29 @@ class PlayerUpdateAPIView(generics.UpdateAPIView):
             raise NotFound("Player not found")
 
         return player
+    
+
+class KillPlayerAPIView(APIView):
+    def post(self, request, player_id):
+        device_id = request.data.get("device_id")
+        if not device_id:
+            return Response({"detail": "device_id required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            player = Player.objects.get(pk=player_id)
+        except Player.DoesNotExist:
+            return Response({"detail": "Player not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        room = player.room
+
+        host = Player.objects.filter(room=room, device_id=device_id, is_host=True).first()
+        if not host:
+            return Response({"detail": "Not authorized"}, status=status.HTTP_403_FORBIDDEN)
+
+        player.is_alive = False
+        player.save()
+
+        return Response({"detail": f"Player {player.nickname or player.seat} killed"}, status=status.HTTP_200_OK)
 
 
 class JoinRoomAPIView(APIView):
